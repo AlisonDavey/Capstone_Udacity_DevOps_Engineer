@@ -8,7 +8,7 @@ pipeline {
             }
         stage('Lint .py') {
             steps {
-                sh 'pylint ./tmp/converted-notebooks/rain_in_spain.py --disable=C,E0602,W0301,W0621'
+                sh 'pylint ./notebooks/tmp/converted-notebooks/rain_in_spain.py --disable=C,E0602,W0301,W0621'
             }
         }
     }
