@@ -8,9 +8,9 @@
 # In[1]:
 
 
-get_ipython().system('pip install mplleaflet')
-get_ipython().system('pip install pylint')
-get_ipython().system('pip install watermark')
+#!pip install mplleaflet
+#!pip install pylint
+#!pip install watermark
 
 
 # In[2]:
@@ -206,22 +206,4 @@ get_ipython().run_line_magic('watermark', '--iversions -p matplotlib,mplleaflet,
 
 get_ipython().system('jupyter nbconvert --to=script --output-dir=./tmp/converted-notebooks/ ./*.ipynb')
 get_ipython().system('pylint ./tmp/converted-notebooks/rain_in_spain.py --disable=C,E0602,W0301,W0621')
-
-
-# In[ ]:
-
-
-get_ipython().system('git push')
-
-
-# In[ ]:
-
-
-get_ipython().system('AlisonDavey')
-
-
-# In[ ]:
-
-
-
 
