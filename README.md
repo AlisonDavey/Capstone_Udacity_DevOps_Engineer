@@ -1,3 +1,5 @@
 # Capstone_Udacity_DevOps_Engineer
-[![Jenkins](https://ci.jenkins.io/job/Plugins/job/analysis-model/job/master/badge/icon?subject=Jenkins%20CI)](https://ci.jenkins.io/job/Plugins/job/analysis-model/job/master/)
+[![Jenkins](http://ec2-13-59-92-215.us-east-2.compute.amazonaws.com:8080/job/Capstone_Udacity_DevOps_Engineer/job/master/badge/icon?subject=Jenkins%20CI)](http://ec2-13-59-92-215.us-east-2.compute.amazonaws.com:8080/job/Capstone_Udacity_DevOps_Engineer/job/master)
+
+
 Project for nanodegree
