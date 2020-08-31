@@ -5,12 +5,17 @@
 # 
 # Data source: The data comes from a subset of The National Centers for Environmental Information (NCEI) [Daily Global Historical Climatology Network](https://www1.ncdc.noaa.gov/pub/data/ghcn/daily/readme.txt) (GHCN-Daily). The GHCN-Daily is comprised of daily climate records from thousands of land surface stations across the globe.
 
-# In[1]:
+# In[39]:
 
 
-#!pip install mplleaflet
-#!pip install pylint
-#!pip install watermark
+get_ipython().system('sudo chmod u+rwx /home/ubuntu/anaconda3')
+
+
+# In[40]:
+
+
+#!pip install pystan
+get_ipython().system('conda install -c conda-forge fbprophet -y')
 
 
 # In[2]:
@@ -204,13 +209,13 @@ get_ipython().run_line_magic('watermark', '--iversions -p matplotlib,mplleaflet,
 # In[23]:
 
 
+#!git add .
+#!git commit -m 'updated notebook'
+
+
+# In[24]:
+
+
 get_ipython().system('jupyter nbconvert --to=script --output-dir=./tmp/converted-notebooks/ ./*.ipynb')
 get_ipython().system('pylint ./tmp/converted-notebooks/rain_in_spain.py --disable=C,E0602,W0301,W0621')
-
-
-# In[ ]:
-
-
-git add .
-git commit -m 'updated notebook'
 
