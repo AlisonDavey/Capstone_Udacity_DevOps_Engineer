@@ -1,0 +1,55 @@
+AWSTemplateFormatVersion: 2010-09-09
+Mappings:
+  RegionMap:
+    us-east-2:
+      HVM64: ami-0bbe28eb2173f6167
+Parameters:
+  Environment:
+    Description: 'Environment name, used as a prefix for resources'
+    Type: String
+    Default: capstone
+  WhiteListIP:
+    Description: Whitelisted IP for SSH connection
+    Type: String
+  KeyPairHost:
+    Description: KeyPair name to access  host via SSH
+    Type: 'AWS::EC2::KeyPair::KeyName'
+    Default: pipeline
+Resources:
+  myEC2Instance:
+    Type: 'AWS::EC2::Instance'
+    Properties:
+      ImageId: !FindInMap 
+        - RegionMap
+        - !Ref 'AWS::Region'
+        - HVM64
+      InstanceType: t2.micro
+      SecurityGroupIds:
+        - Ref: InstanceSecurityGroup
+      KeyName: !Sub '${KeyPairHost}'
+      UserData:
+        Fn::Base64: !Sub |
+          #!/usr/bin/env bash
+          wget https://repo.anaconda.com/archive/Anaconda3-2020.02-Linux-x86_64.sh -O ~/anaconda3.sh
+          bash ~/anaconda3.sh -b -p /home/ubuntu/anaconda3
+          eval "$(/home/ubuntu/anaconda3/bin/conda shell.bash hook)"
+          conda init
+          source ~/.bashrc
+          echo "y" | conda update --all
+          pip install mplleaflet
+          pip install pylint
+          pip install watermark
+
+  InstanceSecurityGroup:
+    Type: 'AWS::EC2::SecurityGroup'
+    Properties:
+      GroupDescription: Enable SSH access via port 22 and Jupyter on port 8888
+      SecurityGroupIngress:
+        - IpProtocol: tcp
+          FromPort: 22
+          ToPort: 22
+          CidrIp: !Sub '${WhiteListIP}'
+        - IpProtocol: tcp
+          FromPort: '8888'
+          ToPort: '8888'
+          CidrIp: 0.0.0.0/0
