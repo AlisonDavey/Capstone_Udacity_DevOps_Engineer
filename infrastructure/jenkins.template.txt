@@ -1,0 +1,53 @@
+AWSTemplateFormatVersion: 2010-09-09
+Mappings:
+  RegionMap:
+    us-east-2:
+      HVM64: ami-0bbe28eb2173f6167
+
+Parameters:
+  Environment:
+    Description: 'Environment name, used as a prefix for resources'
+    Type: String
+    Default: jenkins
+  WhiteListIP:
+    Description: Whitelisted IP for SSH connection
+    Type: String
+  KeyPairHost:
+    Description: KeyPair name to access  host via SSH
+    Type: 'AWS::EC2::KeyPair::KeyName'
+    Default: pipeline
+
+Resources:
+  myEC2Instance:
+    Type: 'AWS::EC2::Instance'
+    Properties:
+      ImageId: !FindInMap 
+        - RegionMap
+        - !Ref 'AWS::Region'
+        - HVM64
+      InstanceType: t2.micro
+      SecurityGroupIds:
+        - Ref: JenkinsSecurityGroup
+      KeyName: !Sub '${KeyPairHost}'
+      UserData:
+        Fn::Base64: !Sub |
+          #!/usr/bin/env bash
+          wget -q -O - https://pkg.jenkins.io/debian/jenkins.io.key | sudo apt-key add -
+          sudo sh -c 'echo deb http://pkg.jenkins.io/debian-stable binary/ > /etc/apt/sources.list.d/jenkins.list'
+          sudo apt update
+          sudo apt install openjdk-8-jdk -y
+          sudo apt install jenkins -y
+
+  JenkinsSecurityGroup:
+    Type: 'AWS::EC2::SecurityGroup'
+    Properties:
+      GroupDescription: Enable SSH access via port 22 and Jenkins on port 8080
+      SecurityGroupIngress:
+        - IpProtocol: tcp
+          FromPort: 22
+          ToPort: 22
+          CidrIp: !Sub '${WhiteListIP}'
+        - IpProtocol: tcp
+          FromPort: '8080'
+          ToPort: '8080'
+          CidrIp: 0.0.0.0/0
