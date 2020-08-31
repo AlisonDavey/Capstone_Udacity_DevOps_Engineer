@@ -207,3 +207,10 @@ get_ipython().run_line_magic('watermark', '--iversions -p matplotlib,mplleaflet,
 get_ipython().system('jupyter nbconvert --to=script --output-dir=./tmp/converted-notebooks/ ./*.ipynb')
 get_ipython().system('pylint ./tmp/converted-notebooks/rain_in_spain.py --disable=C,E0602,W0301,W0621')
 
+
+# In[ ]:
+
+
+git add .
+git commit -m 'updated notebook'
+
