@@ -66,6 +66,8 @@ on the EC2 instance accessed via
 5. Confirm the preferred URL for the Jenkins instance,click save and finish.
 6. Top left: jenkins-administar jenkins-administar plugins / Todos los plugins/ 
 Blue Ocean - Blue Ocean Aggregator - Instalar sin reiniciar /
+Embeddable Build Status - Instalar sin reiniciar /
+CloudBees Docker Build & Publish - Instalar sin reiniciar / 
 Pipeline: AWS Steps - Instalar y reiniciar
 $ sudo systemctl restart jenkins
 7. Log in / Open Blue Ocean / create pipeline
@@ -79,4 +81,5 @@ Scroll down to "Manage credentials"
 Click on "(global)" and then "Add credentials"
 Choose "AWS Credentials" from the dropdown, add "aws-jupyter" on ID, add a description 
 and fill in the AWS Key and Secret Access Key generated when the jenkins IAM role was created.
+Also using docker user name and password add global docker-hub-credentials.
 11. Keep this EC2 running for Jenkins.
