@@ -82,4 +82,5 @@ Click on "(global)" and then "Add credentials"
 Choose "AWS Credentials" from the dropdown, add "aws-jupyter" on ID, add a description 
 and fill in the AWS Key and Secret Access Key generated when the jenkins IAM role was created.
 Also using docker user name and password add global docker-hub-credentials.
+11. For docker commands to run from the Jenkinsfile $sudo setfacl -m user:jenkins:rw /var/run/docker.sock
 11. Keep this EC2 running for Jenkins.
