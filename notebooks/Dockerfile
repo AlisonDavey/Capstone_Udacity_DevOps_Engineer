@@ -1,6 +1,5 @@
 FROM ubuntu:18.04
-RUN apt-get update && apt-get -y update
-RUN apt-get install -y build-essential=12.8 python=3.7.0 pip=20.2.2 --no-install-recommends \
+RUN apt-get update && apt-get install -y build-essential=12.8 python=3.7.0 pip=20.2.2 \
  && apt-get clean \
  && rm -rf /var/lib/apt/lists/*
 RUN mkdir /src
