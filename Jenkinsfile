@@ -8,6 +8,11 @@ pipeline {
                 sh 'echo "Hello World"'
                 }
             }
+        stage('Lint notebooks .py') {
+            steps {
+                sh 'pylint ./notebooks/tmp/converted-notebooks/rain_in_spain.py --disable=all'
+            }
+        }
         stage('Lint Dockerfile') {
             steps {
                 script {
@@ -25,10 +30,22 @@ pipeline {
                     }
                 }
             }
-        stage('Lint .py') {
+        stage('Build docker') {
             steps {
-                sh 'pylint ./notebooks/tmp/converted-notebooks/rain_in_spain.py --disable=all'
+                script {
+                    image = docker.build("alisondavey/rain_in_spain", "-f Dockerfile ./notebooks")
+                }
             }
         }
+        stage('Push docker') {
+            steps {
+                script {
+                    docker.withRegistry('https://registry.hub.docker.com', 'docker-hub-credentials') {
+                        image.push("${env.BUILD_NUMBER}")
+                        image.push("latest")
+                    }
+                }
+            }
+        }        
     }
 }
