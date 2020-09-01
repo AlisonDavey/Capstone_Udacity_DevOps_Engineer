@@ -14,7 +14,7 @@ pipeline {
         stage('Lint Dockerfile') {
             steps {
                 script {
-                    sh 'docker run --rm -i hadolint/hadolint < ./notebooks/Dockerfile | tee -a hadolint.txt'
+                    sh 'sudo docker run --rm -i hadolint/hadolint < ./notebooks/Dockerfile | tee -a hadolint.txt'
                     sh '''
                         lintErrors=$(stat --printf="%s"  hadolint.txt)
                         if [ "$lintErrors" -gt "0" ]; then
@@ -31,7 +31,7 @@ pipeline {
         stage('Build docker') {
             steps {
                 script {
-                    sh 'docker build -t alisondavey/rain_in_spain ./notebooks'
+                    sh 'sudo docker build -t alisondavey/rain_in_spain ./notebooks'
                 }
             }
         }
@@ -39,7 +39,7 @@ pipeline {
             steps {
                 script {
                     docker.withRegistry('https://registry.hub.docker.com', 'docker-hub-credentials') {
-                        sh 'docker push alisondavey/rain_in_spain'
+                        sh 'sudo docker push alisondavey/rain_in_spain'
                     }
                 }
             }
