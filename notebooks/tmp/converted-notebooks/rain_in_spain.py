@@ -5,29 +5,16 @@
 # 
 # Data source: The data comes from a subset of The National Centers for Environmental Information (NCEI) [Daily Global Historical Climatology Network](https://www1.ncdc.noaa.gov/pub/data/ghcn/daily/readme.txt) (GHCN-Daily). The GHCN-Daily is comprised of daily climate records from thousands of land surface stations across the globe.
 
-# In[39]:
+# In[4]:
 
 
-get_ipython().system('sudo chmod u+rwx /home/ubuntu/anaconda3')
-
-
-# In[40]:
-
-
-#!pip install pystan
-get_ipython().system('conda install -c conda-forge fbprophet -y')
-
-
-# In[2]:
-
-
-import pandas as pd
+#import pandas as pd
 import ipywidgets as widgets
-import matplotlib.pyplot as plt
+#import matplotlib.pyplot as plt
 import mplleaflet
 
 
-# In[3]:
+# In[ ]:
 
 
 # countries and their codes
@@ -48,7 +35,7 @@ print(f'Number of stations in {ctry_df[ctry_df.CODE==ctry_code].NAME.item()}: {l
 meta_df.head()
 
 
-# In[4]:
+# In[ ]:
 
 
 def leaflet_plot_stations(df):
@@ -59,13 +46,13 @@ def leaflet_plot_stations(df):
     return mplleaflet.display()
 
 
-# In[5]:
+# In[ ]:
 
 
 leaflet_plot_stations(meta_df)
 
 
-# In[6]:
+# In[ ]:
 
 
 # select weather station
@@ -78,7 +65,7 @@ w=widgets.Dropdown(
 )
 
 
-# In[7]:
+# In[ ]:
 
 
 def on_change_stn(change):
@@ -87,14 +74,14 @@ def on_change_stn(change):
         print (f"station code {change['new']}")
 
 
-# In[8]:
+# In[ ]:
 
 
 w.observe(on_change_stn)
 display(w)
 
 
-# In[9]:
+# In[ ]:
 
 
 def gen_col_names(lst):
@@ -104,7 +91,7 @@ def gen_col_names(lst):
     return lst
 
 
-# In[10]:
+# In[ ]:
 
 
 def gen_drop_col_names(lst):
@@ -114,7 +101,7 @@ def gen_drop_col_names(lst):
     return lst
 
 
-# In[11]:
+# In[ ]:
 
 
 # rainfall data for a single station
@@ -133,7 +120,7 @@ df.set_index('date', inplace=True)
 df.tail()
 
 
-# In[12]:
+# In[ ]:
 
 
 mthly_df=df.resample('MS').sum()
@@ -141,21 +128,21 @@ print ('Monthly')
 mthly_df.head()
 
 
-# In[13]:
+# In[ ]:
 
 
 plt.plot(mthly_df.index[-60:],mthly_df.PRECP[-60:])
 plt.title('monthly rainfall last 5 years');
 
 
-# In[14]:
+# In[ ]:
 
 
 plt.plot(mthly_df.index[-120:-60],mthly_df.PRECP[-120:-60])
 plt.title('monthly rainfall previous 5 years');
 
 
-# In[15]:
+# In[ ]:
 
 
 yrly_df=df.resample('YS').sum()
@@ -163,57 +150,57 @@ print ('Yearly')
 yrly_df.head()
 
 
-# In[16]:
+# In[ ]:
 
 
 plt.plot(yrly_df.index,yrly_df.PRECP);
 
 
-# In[17]:
+# In[ ]:
 
 
 plt.plot(yrly_df.index[-60:],yrly_df.PRECP[-60:]);
 
 
-# In[18]:
+# In[ ]:
 
 
 plt.plot(mthly_df.index[-60*12:],mthly_df.PRECP[-60*12:]);
 
 
-# In[19]:
+# In[ ]:
 
 
 qtly_df=df.resample('QS').sum()
 qtly_df.head()
 
 
-# In[20]:
+# In[ ]:
 
 
 plt.plot(qtly_df.index,qtly_df.PRECP);
 
 
-# In[21]:
+# In[ ]:
 
 
 get_ipython().run_line_magic('load_ext', 'watermark')
 
 
-# In[22]:
+# In[ ]:
 
 
 get_ipython().run_line_magic('watermark', '--iversions -p matplotlib,mplleaflet,watermark,pylint')
 
 
-# In[23]:
+# In[ ]:
 
 
 #!git add .
 #!git commit -m 'updated notebook'
 
 
-# In[24]:
+# In[ ]:
 
 
 get_ipython().system('jupyter nbconvert --to=script --output-dir=./tmp/converted-notebooks/ ./*.ipynb')
