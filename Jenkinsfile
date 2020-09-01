@@ -14,7 +14,7 @@ pipeline {
         stage('Lint Dockerfile') {
             steps {
                 script {
-                    sh 'docker run --rm -i hadolint/hadolint < Dockerfile | tee -a hadolint.txt'
+                    sh 'docker run --rm -i hadolint/hadolint < ./notebooks/Dockerfile | tee -a hadolint.txt'
                     sh '''
                         lintErrors=$(stat --printf="%s"  hadolint.txt)
                         if [ "$lintErrors" -gt "0" ]; then
