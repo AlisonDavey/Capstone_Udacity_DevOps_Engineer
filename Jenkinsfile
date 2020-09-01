@@ -1,3 +1,5 @@
+def image
+
 pipeline {
     agent any
     stages {
@@ -31,7 +33,7 @@ pipeline {
         stage('Build docker') {
             steps {
                 script {
-                    sh 'docker build -t alisondavey/rain_in_spain ./notebooks'
+                    image = docker.build("alisondavey/rain_in_spain", "-f ./notebooks/Dockerfile notebooks")
                 }
             }
         }
@@ -39,7 +41,8 @@ pipeline {
             steps {
                 script {
                     docker.withRegistry('https://registry.hub.docker.com', 'docker-hub-credentials') {
-                        sh 'docker push alisondavey/rain_in_spain'
+                        image.push("${env.BUILD_NUMBER}")
+                        image.push("latest")
                     }
                 }
             }
