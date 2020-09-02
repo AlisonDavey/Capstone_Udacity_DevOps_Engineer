@@ -11,6 +11,7 @@ Parameters:
   WhiteListIP:
     Description: Whitelisted IP for SSH connection
     Type: String
+    Default: 92.56.134.140/32
   KeyPairHost:
     Description: KeyPair name to access  host via SSH
     Type: 'AWS::EC2::KeyPair::KeyName'
@@ -30,15 +31,28 @@ Resources:
       UserData:
         Fn::Base64: !Sub |
           #!/usr/bin/env bash
-          wget https://repo.anaconda.com/archive/Anaconda3-2020.02-Linux-x86_64.sh -O ~/anaconda3.sh
-          bash ~/anaconda3.sh -b -p /home/ubuntu/anaconda3
-          eval "$(/home/ubuntu/anaconda3/bin/conda shell.bash hook)"
-          conda init
-          source ~/.bashrc
-          echo "y" | conda update --all
-          pip install mplleaflet
-          pip install pylint
-          pip install watermark
+          apt-get update
+          apt-get upgrade -y
+          apt-get -y install build-essential python3.6 python3-pip python3-dev python3-setuptools docker.io
+          apt-get update -y
+          python3 -m pip install --upgrade pip
+          python3 -m pip install jupyter
+          python3 -m pip install pandas
+          python3 -m pip install matplotlib
+          python3 -m pip install mplleaflet
+          python3 -m pip install pylint
+          python3 -m pip install watermark
+          gpasswd -a ubuntu docker
+          newgrp docker
+          cd /home/ubuntu
+          git init
+          git clone https://github.com/AlisonDavey/Capstone_Udacity_DevOps_Engineer.git
+          jupyter notebook --generate-config
+          mkdir /home/ubuntu/.jupyter
+          cp /root/.jupyter/jupyter_notebook_config.py /home/ubuntu/.jupyter/jupyter_notebook_config.py
+          echo 'conf = get_config()' >> /home/ubuntu/.jupyter/jupyter_notebook_config.py
+          echo "conf.NotebookApp.ip = '0.0.0.0'" >> /home/ubuntu/.jupyter/jupyter_notebook_config.py
+          echo 'conf.NotebookApp.port = 8888' >> /home/ubuntu/.jupyter/jupyter_notebook_config.py
 
   InstanceSecurityGroup:
     Type: 'AWS::EC2::SecurityGroup'
