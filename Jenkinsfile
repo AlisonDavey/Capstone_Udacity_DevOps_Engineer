@@ -39,10 +39,8 @@ pipeline {
         } 
         stage('Apply deployment') {
             steps {
-                    dir('aws') {
-                        withAWS(credentials: 'aws-kuber', region: 'us-east-2') {
-                            sh 'kubectl apply -f https://rain-in-spain-data.s3.us-east-2.amazonaws.com/rain-service.yaml'
-                    }
+                withAWS(credentials: 'aws-kuber', region: 'us-east-2') {
+                    sh 'kubectl apply -f https://rain-in-spain-data.s3.us-east-2.amazonaws.com/rain-service.yaml'
                 }
             }
         }
