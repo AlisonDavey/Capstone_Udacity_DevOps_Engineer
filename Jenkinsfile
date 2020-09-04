@@ -3,16 +3,6 @@ def image
 pipeline {
     agent any
     stages {
-        stage('Hello World') {
-            steps {
-                sh 'echo "Hello World"'
-                }
-            }
-        stage('Lint notebooks .py') {
-            steps {
-                sh 'pylint ./notebooks/tmp/converted-notebooks/rain_in_spain.py --disable=all'
-            }
-        }
         stage('Lint Dockerfile') {
             steps {
                 script {
@@ -49,7 +39,6 @@ pipeline {
         } 
         stage('Apply deployment') {
             steps {
-                script {
                     dir('kubernetes') {
                         withAWS(credentials: 'aws-credentials', region: 'us-east-2') {
                             sh 'kubectl apply -f rain-service.yaml'
