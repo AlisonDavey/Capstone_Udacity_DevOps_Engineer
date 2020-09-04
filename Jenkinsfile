@@ -40,7 +40,8 @@ pipeline {
         stage('Apply deployment') {
             steps {
                 withAWS(credentials: 'aws-kuber', region: 'us-east-2') {
-                    sh 'kubectl get svc'
+                    sh 'kubectl get svc > get.txt'
+                    sh 'cat get.txt'
                     sh 'kubectl apply -f https://rain-in-spain-data.s3.us-east-2.amazonaws.com/rain-service.yaml'
                 }
             }
