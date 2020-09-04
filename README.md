@@ -16,3 +16,7 @@ Develops a CI/CD pipeline for a Jupyter notebook showing historic data for rainf
 * The _Docker container_ of the notebook and data is built.
 * The _Docker container_ is pushed to docker hub.
 * The _Docker container_ is deployed to a small Kubernetes cluster.
+
+## Kubernetes:
+* Create a cluster
+* Deploy _Docker container_ to the cluster
