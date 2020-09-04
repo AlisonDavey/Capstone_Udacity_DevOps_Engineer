@@ -1,5 +1,5 @@
 FROM ubuntu:18.04
-RUN apt-get update && apt-get install -y build-essential=12.4ubuntu1 python3=3.6.7-1~18.04 python3-pip=9.0.1-2.3~ubuntu1.18.04.2 python3-dev=3.6.7-1~18.04 python3-setuptools=39.0.1-2 --no-install-recommends \
+RUN apt-get update && apt-get install -y build-essential=12.4ubuntu1 python3=3.6.7-1~18.04 python3-pip=9.0.1-2.3~ubuntu1.18.04.2 python3-dev=3.6.7-1~18.04 python3-setuptools --no-install-recommends \
  && apt-get clean \
  && rm -rf /var/lib/apt/lists/*
 RUN mkdir /src
