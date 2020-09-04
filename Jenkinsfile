@@ -49,8 +49,9 @@ pipeline {
         } 
         stage('Apply deployment') {
             steps {
-                dir('kubernetes') {
-                    withAWS(credentials: 'aws-credentials', region: 'us-east-2') {
+                script {
+                    dir('kubernetes') {
+                        withAWS(credentials: 'aws-credentials', region: 'us-east-2') {
                             sh 'kubectl apply -f rain-service.yaml'
                     }
                 }
