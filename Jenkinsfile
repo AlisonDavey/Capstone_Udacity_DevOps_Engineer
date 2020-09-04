@@ -47,5 +47,12 @@ pipeline {
                 }
             }
         }
+        stage('Tidy up Docker') {
+            steps {
+                script {
+                    sh "docker system prune"
+                }
+            }
+        }
     }
 }
