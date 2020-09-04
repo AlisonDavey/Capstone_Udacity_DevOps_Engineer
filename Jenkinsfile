@@ -41,8 +41,7 @@ pipeline {
             steps {
                     dir('aws') {
                         withAWS(credentials: 'aws-kuber', region: 'us-east-2') {
-                            sh 'ls'
-                            sh 'kubectl apply -f rain-service.yaml'
+                            sh 'kubectl apply -f ./aws/rain-service.yaml'
                     }
                 }
             }
