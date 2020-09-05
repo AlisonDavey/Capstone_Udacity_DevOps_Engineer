@@ -39,13 +39,13 @@ pipeline {
         }
         stage('Apply deployment') {
             steps {
-                sh 'echo "Post-project, cluster killed. See stage text in kubernetes directory'
+                sh 'echo "Post-project, cluster killed. See stage text in kubernetes directory"'
                 }
             }
         stage('Tidy up Docker') {
             steps {
                 script {
-                    sh "docker system prune"
+                    sh 'docker system prune'
                 }
             }
         }
