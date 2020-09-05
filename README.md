@@ -21,3 +21,5 @@ Develops a CI/CD pipeline for a Jupyter notebook showing historic data for rainf
 ### Kubernetes:
 * Create a cluster using AWS EKS
 * Deploy _Docker container_ to the cluster
+
+Completed 5 September 2020 [Certificate](https://confirm.udacity.com/UJC5DELF)
