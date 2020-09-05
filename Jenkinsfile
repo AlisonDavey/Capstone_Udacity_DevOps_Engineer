@@ -39,14 +39,9 @@ pipeline {
         }
         stage('Apply deployment') {
             steps {
-                dir('kubernetes') {
-                    withAWS(credentials: 'aws-kuber', region: 'us-east-2') {
-                        sh 'aws eks --region us-east-2 update-kubeconfig --name rain-in-spain'
-                        sh 'kubectl apply -f rain-service.yaml'
-                    } 
+                sh 'echo "Post-project, cluster killed. See stage text in kubernetes directory'
                 }
             }
-        }
         stage('Tidy up Docker') {
             steps {
                 script {
